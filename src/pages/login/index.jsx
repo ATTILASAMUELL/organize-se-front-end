@@ -36,7 +36,6 @@ export const Login = () => {
         setLoading(true);
         const isLogin = await auth.signin(email, password);
         setLoading(false);
-        console.log(isLogin)
         if (isLogin === undefined) {
             showErrorNotification("Erro - tente novamente mais tarde!");
             return;
@@ -53,10 +52,8 @@ export const Login = () => {
 
         if ( isLogin.data.status == "success") {
             showSuccessNotification("Login realizado com sucesso!!!");
-            // Agendar a execução do navigate('/') após 1.5 segundos
             setTimeout(() => navigate('/dashboard'), 1500);
         } else {
-            console.log("aqaq")
             showErrorNotification("Erro - Tente novamente!!!");
         }
     }
