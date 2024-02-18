@@ -36,7 +36,7 @@ export const Login = () => {
         setLoading(true);
         const isLogin = await auth.signin(email, password);
         setLoading(false);
-    
+        console.log(isLogin)
         if (isLogin === undefined) {
             showErrorNotification("Erro - tente novamente mais tarde!");
             return;
@@ -46,12 +46,17 @@ export const Login = () => {
             showErrorNotification(`Seu email ainda não foi confirmado, reenviamos a validação para o email ${email}!`);
             return;
         }
-    
-        if (isLogin.status === 200 || isLogin === true) {
+        if (isLogin.response?.status === 401) {
+            showErrorNotification("Erro - tente novamente mais tarde!");
+            return;
+        }
+
+        if ( isLogin.data.status == "success") {
             showSuccessNotification("Login realizado com sucesso!!!");
             // Agendar a execução do navigate('/') após 1.5 segundos
             setTimeout(() => navigate('/dashboard'), 1500);
         } else {
+            console.log("aqaq")
             showErrorNotification("Erro - Tente novamente!!!");
         }
     }
