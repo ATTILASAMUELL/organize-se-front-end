@@ -8,7 +8,7 @@ body{
 .main-login{
     width: 100vw;
     height: 100vh;
-    background: rgb(255, 255, 255);
+    background: #FFFFFF;
     display: flex;
     justify-content: center;
     align-items: center;
