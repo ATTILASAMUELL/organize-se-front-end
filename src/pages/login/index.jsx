@@ -36,6 +36,7 @@ export const Login = () => {
         setLoading(true);
         const isLogin = await auth.signin(email, password);
         setLoading(false);
+        console.log(isLogin)
         if (isLogin === undefined) {
             showErrorNotification("Erro - tente novamente mais tarde!");
             return;
@@ -45,7 +46,7 @@ export const Login = () => {
             showErrorNotification(`Seu email ainda não foi confirmado, reenviamos a validação para o email ${email}!`);
             return;
         }
-        if (isLogin.response?.status === 401) {
+        if (isLogin.response?.status === 401 || isLogin.response?.status === 404 || isLogin.response?.status === 500) {
             showErrorNotification("Erro - tente novamente mais tarde!");
             return;
         }
