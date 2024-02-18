@@ -22,17 +22,23 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
       const storageData = localStorage.getItem("authToken");
       if (storageData) {
         const data = await api.validateToken(storageData);
-        
-        if (data.user) {
-          setUser(data.user);
-          setTokenStorage(data.authorisation.token);
-          updateContextUser(data.user); // Atualiza o contexto após setUser
+        if(data !== undefined) {
+          if (data.data.user) {
+            setUser(data.data.user);
+            setTokenStorage(data.data.authorization.token);
+            updateContextUser(data.data.user); // Atualiza o contexto após setUser
+          } else {
+            setUser(null);
+            setTokenStorage("");
+            updateContextUser(null); // Atualiza o contexto para null
+          }
+
         } else {
           setUser(null);
           setTokenStorage("");
           updateContextUser(null); // Atualiza o contexto para null
         }
-        console.log(auth);
+        
       }
       const timer = setTimeout(() => {
         setLoading(false);
@@ -82,7 +88,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
   if (loading) {
     return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop:"10px" }}>
     <div style={{ marginRight: "10px" }}>
-      <ClipLoader loading={true} size={45} aria-label="Loading Spinner" color='#8cc84b' data-testid="loader" />
+      <ClipLoader loading={true} size={35} aria-label="Loading Spinner" color='#8cc84b' data-testid="loader" />
     </div>
     <img src={logoWithName} alt="logo"  width={270} height={70} />
   </div>;
